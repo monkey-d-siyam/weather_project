@@ -49,6 +49,14 @@
 <body>
     <div class="container">
         <h1>Weather Forecast</h1>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            {% endif %}
+        </nav>
         <form method="get" action="{% url 'index' %}">
             <input type="text" name="city" placeholder="Enter city" required>
             <button type="submit">Get Weather</button>
