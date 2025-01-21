@@ -1,15 +1,11 @@
-from .utils import get_weather_data
-
-def index(request):
-    weather_data = None
-    if 'city' in request.GET:
-        city = request.GET['city']
-        weather_data = get_weather_data(city)
-    return render(request, 'forecast/index.html', {'weather_data': weather_data})
-
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.shortcuts import render, redirect
+from .utils import get_weather_data
+
+def home(request):
+    return render(request, 'forecast/home.html')
 
 def signup(request):
     if request.method == 'POST':
@@ -37,4 +33,12 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('home')
+
+@login_required
+def index(request):
+    weather_data = None
+    if 'city' in request.GET:
+        city = request.GET['city']
+        weather_data = get_weather_data(city)
+    return render(request, 'forecast/index.html', {'weather_data': weather_data})
