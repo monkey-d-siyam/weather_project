@@ -1,18 +1,24 @@
 {% extends 'forecast/base.html' %}
 {% block content %}
-<h2>Weather Forecast</h2>
-<form method="get" action="{% url 'index' %}">
-    <input type="text" name="city" placeholder="Enter city" required>
-    <button type="submit">Get Weather</button>
-</form>
-{% if weather_data %}
-<div class="weather-card">
-    <h3>Weather in {{ weather_data.city }}</h3>
-    <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" class="weather-icon" alt="weather icon">
-    <p>Temperature: {{ weather_data.temperature }}°C</p>
-    <p>Description: {{ weather_data.description }}</p>
-    <p>Humidity: {{ weather_data.humidity }}%</p>
-    <p>Wind Speed: {{ weather_data.wind_speed }} km/h</p>
+<div class="nav">
+    <a href="{% url 'profile' %}" class="btn btn-primary">Profile</a>
+    <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
 </div>
-{% endif %}
+<div>
+    <h2>Weather Forecast</h2>
+    <form method="get" action="{% url 'index' %}">
+        <input type="text" name="city" placeholder="Enter city" required>
+        <button type="submit" class="btn btn-primary">Get Weather</button>
+    </form>
+    {% if weather_data %}
+    <div class="weather-card">
+        <h3>Weather in {{ weather_data.city }}</h3>
+        <img src="http://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png" class="weather-icon" alt="weather icon">
+        <p>Temperature: {{ weather_data.temperature }}°C</p>
+        <p>Description: {{ weather_data.description }}</p>
+        <p>Humidity: {{ weather_data.humidity }}%</p>
+        <p>Wind Speed: {{ weather_data.wind_speed }} km/h</p>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
