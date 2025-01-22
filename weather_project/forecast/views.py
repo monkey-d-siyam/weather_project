@@ -42,10 +42,14 @@ def user_logout(request):
 @login_required
 def index(request):
     weather_data = None
+    weather_condition = None
     if 'city' in request.GET:
         city = request.GET['city']
         weather_data = get_weather_data(city)
-    return render(request, 'forecast/index.html', {'weather_data': weather_data})
+        if weather_data:
+            weather_condition = weather_data['description']
+    return render(request, 'forecast/index.html', {'weather_data': weather_data, 'weather_condition': weather_condition})
+
 
 @login_required
 def profile(request):

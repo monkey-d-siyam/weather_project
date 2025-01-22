@@ -4,7 +4,7 @@
     <a href="{% url 'profile' %}" class="btn btn-primary">Profile</a>
     <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
 </div>
-<div>
+<div class="weather-container {% if weather_data and weather_data.description == 'rain' %}rain{% endif %}">
     <h2>Weather Forecast</h2>
     <form method="get" action="{% url 'index' %}">
         <input type="text" name="city" placeholder="Enter city" required>
