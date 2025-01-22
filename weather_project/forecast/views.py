@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
 from .utils import get_weather_data
+from .models import UserProfile
 
 def home(request):
     return render(request, 'forecast/home.html')
@@ -26,6 +27,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                UserProfile.objects.get_or_create(user=user)  # Ensure user profile creation
                 return redirect('index')
     else:
         form = AuthenticationForm()
@@ -42,3 +44,24 @@ def index(request):
         city = request.GET['city']
         weather_data = get_weather_data(city)
     return render(request, 'forecast/index.html', {'weather_data': weather_data})
+
+@login_required
+def profile(request):
+    user = request.user
+    if request.method == 'POST':
+        if 'username' in request.POST:
+            user.username = request.POST['username']
+            user.save()
+        if 'password' in request.POST:
+            password_form = PasswordChangeForm(request.user, request.POST)
+            if password_form.is_valid():
+                user = password_form.save()
+                update_session_auth_hash(request, user)
+                return redirect('profile')
+    else:
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'forecast/profile.html', {
+        'user': user,
+        'password_form': password_form
+    })
