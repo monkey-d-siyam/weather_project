@@ -1,4 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.shortcuts import render, redirect
+from .utils import get_weather_data
+from django.contrib.auth import update_session_auth_hash
+from .models import UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.shortcuts import render, redirect
