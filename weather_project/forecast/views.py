@@ -66,7 +66,7 @@ def profile(request):
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
-                update_session_auth_hash(request, user)
+                update_session_auth_hash(request, user)  # Keep the user logged in after password change
                 return redirect('profile')
     else:
         password_form = PasswordChangeForm(request.user)
