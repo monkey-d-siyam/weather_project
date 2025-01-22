@@ -48,6 +48,8 @@ def index(request):
 @login_required
 def profile(request):
     user = request.user
+    password_form = PasswordChangeForm(request.user)
+
     if request.method == 'POST':
         if 'username' in request.POST:
             user.username = request.POST['username']
