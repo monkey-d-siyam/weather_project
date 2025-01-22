@@ -52,7 +52,10 @@ def profile(request):
         if 'username' in request.POST:
             user.username = request.POST['username']
             user.save()
-        if 'password' in request.POST:
+            # Update the password form in case of POST
+            password_form = PasswordChangeForm(request.user)
+            return redirect('profile')
+        elif 'old_password' in request.POST:
             password_form = PasswordChangeForm(request.user, request.POST)
             if password_form.is_valid():
                 user = password_form.save()
