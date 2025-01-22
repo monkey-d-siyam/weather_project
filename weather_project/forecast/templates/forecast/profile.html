@@ -1,0 +1,18 @@
+{% extends 'forecast/base.html' %}
+{% block content %}
+<h2>Profile</h2>
+<p>Username: {{ user.username }}</p>
+<h3>Change Username</h3>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="username" value="{{ user.username }}" required>
+    <button type="submit">Change Username</button>
+</form>
+
+<h3>Change Password</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ password_form.as_p }}
+    <button type="submit">Change Password</button>
+</form>
+{% endblock %}
