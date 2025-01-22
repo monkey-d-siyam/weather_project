@@ -15,5 +15,17 @@
         {{ password_form.as_p }}
         <button type="submit" class="btn btn-secondary">Change Password</button>
     </form>
+    <h3>Favorite Cities</h3>
+    <ul>
+        {% for city in favorite_cities %}
+        <li>{{ city.name }}, {{ city.country }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Add Favorite City</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ favorite_city_form.as_p }}
+        <button type="submit" class="btn btn-secondary">Add City</button>
+    </form>
 </div>
 {% endblock %}

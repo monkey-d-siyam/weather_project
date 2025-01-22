@@ -15,9 +15,17 @@ class Weather(models.Model):
 from django.contrib.auth.models import User
 from django.db import models
 
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.name}, {self.country}"
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     recent_activities = models.TextField(blank=True)
+    favorite_cities = models.ManyToManyField(City, blank=True)
 
     def __str__(self):
         return self.user.username

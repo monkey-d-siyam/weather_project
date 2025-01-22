@@ -6,6 +6,9 @@ class EnsureUserProfileMiddleware:
 
     def __call__(self, request):
         if request.user.is_authenticated:
-            UserProfile.objects.get_or_create(user=request.user)
-        response = self.get_response(request)
-        return response
+            try:
+                UserProfile.objects.get_or_create(user=request.user)
+            except Exception as e:
+                # Log the exception or handle it appropriately
+                pass
+        return self.get_response(request)
